@@ -1,16 +1,15 @@
-from flask import Flask
-import threading
+from flask import Flask, request
 import os
 import json
 import gspread
 from google.oauth2.service_account import Credentials 
 from telebot import TeleBot, types
 
-# ✅  التوكن بتاع البوت هنا
-bot = TeleBot("8142209161:AAHP5OYE83laIzLsmB6i_XvlSkmv2zTx9QU", parse_mode="HTML")
-ADMIN_ID=1437951187;
+BOT_TOKEN = os.environ.get("BOT_TOKEN")  
+bot = TeleBot(BOT_TOKEN, parse_mode="HTML")
+ADMIN_ID = 1437951187
 
-#اعدادات Google Sheets
+# Google Sheets
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
@@ -475,18 +474,22 @@ def get_file_id(message):
         file_id = message.document.file_id
         bot.send_message(message.chat.id, f"Document ID: {file_id}")
 
-# ✅ Web Server عشان Replit يفضل شغال
-app = Flask('')
+app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "Bot is running!"
 
-def run():
-    app.run(host="0.0.0.0", port=8080)
+@app.route(f"/{BOT_TOKEN}", methods=['POST'])
+def webhook():
+    json_str = request.get_data().decode('utf-8')
+    update = types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return "!", 200
 
-# ✅ نشغل الفلاسك في Thread منفصل
-threading.Thread(target=run).start()
-# ✅ تشغيل البوت
-print("✅ Bot is running...")
-bot.infinity_polling()
+# ✅ عند التشغيل المحلي للتجربة
+if __name__ == "__main__":
+    WEBHOOK_URL = os.environ.get("WEBHOOK_URL")  # https://your-vercel-app.vercel.app/<BOT_TOKEN>
+    bot.remove_webhook()
+    bot.set_webhook(url=WEBHOOK_URL)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
