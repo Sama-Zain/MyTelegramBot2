@@ -1,3 +1,5 @@
+from flask import Flask
+import threading
 import os
 import json
 import gspread
@@ -425,7 +427,8 @@ def handle_message(message):
     else:
         bot.send_message(
             message.chat.id,
-            "⚠️ لسه مفيش فيديو مضاف، ارفعه كملف الأول."
+            "❗مش فاهم الطلب، اختار من القايمة تحت 🙏",
+                        reply_markup=main_menu()
         )
 
     # else:
@@ -433,7 +436,7 @@ def handle_message(message):
     #         message.chat.id,
     #         "❗مش فاهم الطلب، اختار من القايمة تحت 🙏",
     #         reply_markup=main_menu()
-    #     )
+    # )
     
 
 # # ✅ لما المستخدم يرفع فيديو كملف (Document)
@@ -472,6 +475,18 @@ def get_file_id(message):
         file_id = message.document.file_id
         bot.send_message(message.chat.id, f"Document ID: {file_id}")
 
+# ✅ Web Server عشان Replit يفضل شغال
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run():
+    app.run(host="0.0.0.0", port=8080)
+
+# ✅ نشغل الفلاسك في Thread منفصل
+threading.Thread(target=run).start()
 # ✅ تشغيل البوت
 print("✅ Bot is running...")
 bot.infinity_polling()
