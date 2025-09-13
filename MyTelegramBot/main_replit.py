@@ -445,6 +445,10 @@ app = Flask(__name__)
 def home():
     return "Bot is running!"
 
+@app.route('/api', methods=['GET', 'HEAD'])
+def api():
+    return {"status": "ok", "message": "Telegram Bot API is running"}, 200
+
 @app.route("/webhook", methods=['POST'])
 def webhook():
     json_str = request.get_data().decode('utf-8')
