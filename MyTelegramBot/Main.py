@@ -5,7 +5,7 @@ import gspread
 from google.oauth2.service_account import Credentials 
 from telebot import TeleBot, types
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")  
+BOT_TOKEN = "8142209161:AAHP5OYE83laIzLsmB6i_XvlSkmv2zTx9QU"
 bot = TeleBot(BOT_TOKEN, parse_mode="HTML")
 ADMIN_ID = 1437951187
 
@@ -14,8 +14,9 @@ SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ]
+with open("my-project-bot-8163-56c4aa024bd9.json") as f:
+    service_account_info = json.load(f)
 
-service_account_info = json.loads(os.environ['GOOGLE_SERVICE_ACCOUNT_JSON'])
 creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
 client = gspread.authorize(creds)
 
@@ -24,18 +25,18 @@ codes_sheet =spreadsheet.worksheet('codes')
 user_codes_sheet = spreadsheet.worksheet("user_codes")
 
 # ids فيديوهات الشرح
-IPWEB_VIDEO_ID ="BAACAgQAAxkBAAIBcGiV_FL0GRELYcxRHU6C9GyCI06GAAK_GAACtASxUEdytYx3fYrvNgQ"
-UNU_VIDEO_ID="BAACAgQAAxkBAAICAAFolgff_rNGfcJXd0ChZjf6ZCQJIQACzxgAArQEsVAzUVLyGujlMTYE"
-VKSURF_VIDEO1_ID ="BAACAgQAAxkBAAICImiWDqT_AX6q7suVMGTmaTnnbT1pAALaGAACtASxUCbdR-1wTsa8NgQ"
+IPWEB_VIDEO_ID ="BAACAgQAAxkBAAJjqWjQK8sN5cIQrLyjN2gpq7SoIWM9AAIWGAACwDqAUkXqZzQMc_wCNgQ"
+UNU_VIDEO_ID="BAACAgQAAxkBAAJjsWjQN6-gp6cHUDqtoTy9eaM_eGFbAAJnGgACwDqIUvjrkxy8WenUNgQ"
+VKSURF_VIDEO1_ID ="BAACAgQAAxkBAAJjwWjQPSlrXJGrDF_vuYkampvYFe3fAAJxGgACwDqIUhFRzD1SdXZ6NgQ"
 VKSURF_VIDEO2_ID ="BAACAgQAAxkBAAICJmiWExCvmaj6n1tmXv5KouCmlM-5AALkGAACtASxUCKwgsEkVWRANgQ"
 VKTARGET_VIDEO_ID="BAACAgQAAxkBAAIDQGiWJYziEa26A3UWuMIUIM1P7j11AAL3GAACtASxUPigHKj4jsxtNgQ"
 AVISO_VIDEO1_ID="BAACAgQAAxkBAAIDZWiWM3omtWH6PorUyopZ50-OW5AuAALPHgACAVyxUM9nQkSbJYnpNgQ"
 AVISO_VIDEO2_ID="BAACAgQAAxkBAAIDZ2iWNnDL-sxlAwsSg9C1m2_0CKVbAALTHgACAVyxUAo8sTdQH2I1NgQ"
 
 # ids فيديوهات السحب
-IPWEB_ID="BAACAgQAAxkBAAIFM2iW_eFXXvU21Ty02c-DCRYp3r8pAAK6HAACAVy5UPBKObloM5H7NgQ"
-UNU_ID="BAACAgQAAxkBAAIFNWiW_5OqMl51URRWsNarus_fscBzAAK7HAACAVy5UDay9oKKsOrjNgQ"
-VKSURF_ID1="BAACAgQAAxkBAAIFO2iXAXJyf0nnnueg1GS6nkwKQ5MPAALBHAACAVy5UBrqPBE6kJjGNgQ"
+IPWEB_ID="BAACAgQAAxkBAAJjr2jQMRhPl5SKpnkU9CnA9wKdrOCVAAI3GAACwDqAUmltTXOuNuikNgQ"
+UNU_ID="BAACAgQAAxkBAAJjtWjQOlBG0LT81tlojqJNS044iJxcAAJtGgACwDqIUuv03viL7exXNgQ"
+VKSURF_ID1="BAACAgQAAxkBAAJjxWjQQd51QAJv8oVCWJiDesjKOcyRAAKCGgACwDqIUpitJaPPqV7PNgQ"
 VKSURF_ID2="AgACAgQAAxkBAAIFW2iXLfnU6MnBIiZ6mr5EI5VRe9miAAKwzDEbAVy5UKfH3jNJ-Q-XAQADAgADeAADNgQ"
 VKTARGET_ID="BAACAgQAAxkBAAIFOWiXAAHyPxby1YNK6y2nEQLojL375QACvRwAAgFcuVABVg1-_14qOTYE"
 AVISO_ID1="BAACAgQAAxkBAAIFN2iXAAFJ7GsoaiKKWgbXxVvoV7FWiAACvBwAAgFcuVBjVJlZcVPe3DYE"
@@ -192,6 +193,12 @@ def handle_message(message):
                 "🎥 الفيديو موضح كل حاجة بالتفاصيل 👆🏼"
             )
         )
+        bot.send_photo(
+            message.chat.id,
+            "AgACAgQAAxkBAAJkNWjQRnpBnqBQnfPNGphWPkWJtsswAAJNyzEbwDqIUi6hXF123lfuAQADAgADeQADNgQ",  # استبدليها بالـ file_id بتاع الصورة اللي عاوزاها
+            caption="ده كده شكل الاسكرين اللي مفرود تبعتهالي برايفت ساعه القبض ياريت تكون مترتبه والبينات صحيحه عشان القبض ميتأخرش او يحصل مشكله ❤️"
+        )
+
         bot.send_message(
            message.chat.id,
            "السعر:\n"
@@ -438,7 +445,7 @@ def handle_message(message):
     # )
     
 
-# # ✅ لما المستخدم يرفع فيديو كملف (Document)
+# ✅ لما المستخدم يرفع فيديو كملف (Document)
 # @bot.message_handler(content_types=['document'])
 # def handle_document_video(message):
 #     if message.document.mime_type.startswith("video/"):
@@ -455,7 +462,6 @@ def handle_message(message):
 #             reply_markup=main_menu()
 #         )
 
-# # ✅ لما المستخدم يرسل فيديو عادي (Video)
 # @bot.message_handler(content_types=['video'])
 # def handle_video(message):
 #     file_id = message.video.file_id
@@ -465,14 +471,15 @@ def handle_message(message):
 #         parse_mode="HTML"
 #     )
 
-@bot.message_handler(content_types=['photo', 'document'])
-def get_file_id(message):
-    if message.photo:
-        file_id = message.photo[-1].file_id
-        bot.send_message(message.chat.id, f"Photo ID: {file_id}")
-    elif message.document:
-        file_id = message.document.file_id
-        bot.send_message(message.chat.id, f"Document ID: {file_id}")
+# @bot.message_handler(content_types=['photo', 'document'])
+# def get_file_id(message):
+#     if message.photo:
+#         file_id = message.photo[-1].file_id
+#         bot.send_message(message.chat.id, f"Photo ID: {file_id}")
+#     elif message.document:
+#         file_id = message.document.file_id
+#         bot.send_message(message.chat.id, f"Document ID: {file_id}")
+
 
 app = Flask(__name__)
 
@@ -493,3 +500,7 @@ if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url=WEBHOOK_URL)
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
+# if __name__ == "__main__":
+#     bot.remove_webhook()  
+#     bot.infinity_polling()  # ده بيخلي البوت يشتغل محلي على طول
